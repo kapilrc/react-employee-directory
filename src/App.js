@@ -5,16 +5,16 @@ import Header from './Header';
 class SearchBar extends Component {
   constructor(props) {
     super(props);
-  
+
     this.state = {
       searchKey: ""
     }
     this.searchHandler = this.searchHandler.bind(this);
   }
-  
+
   searchHandler(evt) {
     var searchKey = evt.target.value;
-    this.setState({searchKey: searchKey});
+    this.setState({ searchKey: searchKey });
     this.props.searchHandler(searchKey);
   }
 
@@ -32,7 +32,7 @@ class EmployeeListItem extends Component {
     return (
       <li>
         <a href={"#employee/" + this.props.employee.id}>
-          {this.props.employee.firstName} {this.props.employee.lastName} 
+          {this.props.employee.firstName} {this.props.employee.lastName}
         </a>
       </li>
     );
@@ -49,7 +49,7 @@ class EmployeeList extends Component {
 
     return (
       <div>
-        <ul>
+        <ul className="emp-panel">
           {items}
         </ul>
       </div>
@@ -60,29 +60,29 @@ class EmployeeList extends Component {
 class HomePage extends Component {
   constructor(props) {
     super(props);
-  
-    this.state = {searchKey: "", employees: []};
+
+    this.state = { searchKey: "", employees: [] };
     this.searchHandler = this.searchHandler.bind(this)
   }
 
   componentDidMount() {
     this.searchHandler("");
   }
-  
+
   searchHandler(key) {
-    var self= this;
-    this.props.service.findByName(key).done(function(resp) {
-      self.setState({searchKey: key, employees: resp});
+    var self = this;
+    this.props.service.findByName(key).done(function (resp) {
+      self.setState({ searchKey: key, employees: resp });
     })
   }
 
   render() {
 
     return (
-      <div>
-       <Header text="Employee Directory" />
-       <SearchBar searchHandler={this.searchHandler} />
-       <EmployeeList employees={this.state.employees}/> 
+      <div className="container">
+        <Header text="Employee Directory" />
+        <SearchBar searchHandler={this.searchHandler} />
+        <EmployeeList employees={this.state.employees} />
       </div>
     );
   }
